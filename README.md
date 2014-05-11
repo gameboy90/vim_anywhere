@@ -7,6 +7,7 @@
 Execute the `setup.sh`
 
     sh setup.sh
+    OR bash setup.sh (if you are not sure you are using bash for shell default script)
 
 ### windows ###
 
