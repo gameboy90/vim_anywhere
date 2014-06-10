@@ -490,24 +490,14 @@ endfunction
 """"""""""""""""""""""""""""""
 " remove the ^M
 nmap <leader>m :%s/<C-v><C-m>//g<cr>   
+
 nmap <leader>8 :set fileencoding=utf-8<cr>:w<cr>:set fenc<cr>
 nmap <leader>9 :set fileencoding=cp936<cr>:w<cr>:set fenc<cr>
 nmap <leader>w :w!<cr>
 nmap <leader>e :e
 
-"nmap <leader>w :w!<cr>:call Save_to_ftp()<cr>
-function! Save_to_ftp()
-    if MySys() == "win"
-        let l:srvIP = "192.168.0.197"
-        let l:fn = expand("%:p")
-        let l:userName = "huqiu"
-        let l:pwd = "123"
-        let l:uploaderFilePath = $VIM . "/plugins/kx_ftp_uploader/jonesiaDevHelperInterface.exe"
-        let l:argStr = printf("%s %s %s %s %s", l:srvIP, l:userName, l:pwd, "upload", l:fn)
-        let cmd = printf("silent !%s %s\r\n", l:uploaderFilePath, l:argStr)
-        exec cmd
-    endif
-endfunction
-
 " add NERDTREE plugin for dir view on left window,making a shortcut here Ctrl+n=:NERDTreeToggle
 nmap <C-n> :NERDTreeToggle<CR>
+
+" add flodmethod as marker to zf aotoclouser /*{{{*/
+set foldmethod=marker
