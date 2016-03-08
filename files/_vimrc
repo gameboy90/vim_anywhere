@@ -497,7 +497,7 @@ nmap <leader>w :w!<cr>
 nmap <leader>e :e
 
 " add NERDTREE plugin for dir view on left window,making a shortcut here Ctrl+n=:NERDTreeToggle
-nmap <C-n> :NERDTreeToggle<CR>
+nmap <C-m> :NERDTreeToggle<cr>
 
 " add flodmethod as marker to zf aotoclouser /*{{{*/
 set foldmethod=marker
