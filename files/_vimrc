@@ -500,4 +500,5 @@ nmap <leader>e :e
 nmap <C-m> :NERDTreeToggle<cr>
 
 " add flodmethod as marker to zf aotoclouser /*{{{*/
-set foldmethod=marker
+" set foldmethod=marker
+set foldmethod=syntax
