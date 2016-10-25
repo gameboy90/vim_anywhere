@@ -33,3 +33,8 @@ In mac, should replace the [`Exuberant CTags`](http://www.scholarslab.org/resear
 In Minimum Installation CentOS
 
     sudo yum install -y ctags
+
+To support golang programming
+    
+    frist:make function list support golang
+    second:integrate go official tools:godef/gofmt etc.reference is here:https://github.com/gameboy90/vim-go#features
