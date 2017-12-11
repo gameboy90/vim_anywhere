@@ -297,6 +297,46 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => config for foldmethod
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" add flodmethod as marker to zf aotoclouser /*{{{*/
+" set foldmethod=marker
+set foldmethod=syntax
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => config for cscope
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cscope settings                                                                 
+if has("cscope")                                                                 
+    set csto=1                                                                   
+    set cst                                                                      
+    set nocsverb                                                                 
+    " add any database in current directory                                      
+    if filereadable("cscope.out")                                                
+        cs add cscope.out                                                        
+    endif                                                                        
+    set csverb                                                                   
+endif                                                                            
+
+"s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方                          
+"g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能                        
+"d: 查找本函数调用的函数                                                         
+"c: 查找调用本函数的函数                                                         
+"t: 查找指定的字符串                                                             
+"e: 查找egrep模式，相当于egrep功能，但查找速度快多了                             
+"f: 查找并打开文件，类似vim的find功能                                            
+"i: 查找包含本文件的文件                                                         
+nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>                           
+nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>                           
+nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>                           
+nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>                           
+nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>                           
+nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>                           
+nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>                         
+nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " When you press gv/gr you vimgrep/grep after the selected text
@@ -428,10 +468,10 @@ function! <SID>BufcloseCloseIt()
 endfunction
 
 " tags
-set tags=tags;
-set autochdir
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
+" set tags=tags;
+" set autochdir
+" let Tlist_Show_One_File=1
+" let Tlist_Exit_OnlyWindow=1
 
 nnoremap <silent> <F3> :Grep<CR>
 
@@ -440,11 +480,14 @@ nnoremap <silent> <F3> :Grep<CR>
 """"""""""""""""""""""""""""""
 let g:netrw_winsize = 30
 nmap <silent> <leader>fe :Sexplore<cr> 
+" add NERDTREE plugin for dir view on left window,making a shortcut here Ctrl+n=:NERDTreeToggle
+nmap <C-m> :NERDTreeToggle<cr>
 
 """"""""""""""""""""""""""""""
 " winManager
 """"""""""""""""""""""""""""""
-let g:winManagerWindowLayout='BufExplorer|TagList'
+" let g:winManagerWindowLayout='BufExplorer|TagList'
+let g:winManagerWindowLayout='BufExplorer'
 let g:winManagerWidth = 30
 let g:defaultExplorer = 0
 nmap <leader>f :FirstExplorerWindow<cr>
@@ -462,6 +505,11 @@ let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = 30  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 autocmd BufWinEnter \[Buf\ List\] setl nonumber
+
+""""""""""""""""""""""""""""""
+" Coding general restriction
+""""""""""""""""""""""""""""""
+set colorcolumn=81
 
 """"""""""""""""""""""""""""""
 " jquery syntax highlight
@@ -496,9 +544,4 @@ nmap <leader>9 :set fileencoding=cp936<cr>:w<cr>:set fenc<cr>
 nmap <leader>w :w!<cr>
 nmap <leader>e :e
 
-" add NERDTREE plugin for dir view on left window,making a shortcut here Ctrl+n=:NERDTreeToggle
-nmap <C-m> :NERDTreeToggle<cr>
 
-" add flodmethod as marker to zf aotoclouser /*{{{*/
-" set foldmethod=marker
-set foldmethod=syntax
