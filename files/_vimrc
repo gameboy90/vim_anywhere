@@ -1,54 +1,13 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-"       Amir Salihefendic
-"       http://amix.dk - amix@amix.dk
-"
-" Version: 
-"       5.0 - 29/05/12 15:43:36
-"
-" Blog_post: 
-"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
-"
-" Raw_version: 
-"       http://amix.dk/vim/vimrc.txt
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> vimgrep searching and cope displaying
-"    -> Spell checking
-"    -> Misc
-"    -> Helper functions
-"
+" Alanyuan's vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Sets how many lines of history VIM has to remember
 set history=700
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -116,7 +75,6 @@ set tm=500
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable "Enable syntax hl
 
 function! MySys()
     if has("win32")
@@ -164,30 +122,17 @@ set nobackup
 set nowb
 set noswapfile
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
+" For python under pep8 standard
+au BufNewFile,BufRead *.py set tabstop=8 softtabstop=4 shiftwidth=4 expandtab
 
-" Be smart when using tabs ;)
-set smarttab
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
-" Ruby
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
+" For javascript html css
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
 
 
 """"""""""""""""""""""""""""""
@@ -247,7 +192,7 @@ catch
 endtry
 
 " Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
+au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \   exe "normal! g`\"" |
             \ endif
@@ -284,57 +229,60 @@ if has("mac") || has("macunix")
     vmap <D-k> <M-k>
 endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => delete unnecessary whitespace
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
     exe "normal mz"
     %s/\s\+$//ge
     exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.php :call DeleteTrailingWS()
-autocmd BufWrite *.js :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
+au BufWrite *.py :call DeleteTrailingWS()
+au BufWrite *.php :call DeleteTrailingWS()
+au BufWrite *.js :call DeleteTrailingWS()
+au BufWrite *.coffee :call DeleteTrailingWS()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => config for foldmethod
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " add flodmethod as marker to zf aotoclouser /*{{{*/
 " set foldmethod=marker
-set foldmethod=syntax
+au FileType php set foldmethod=syntax
+au FileType python set foldmethod=indent
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => config for cscope
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-cscope settings                                                                 
-if has("cscope")                                                                 
-    set csto=1                                                                   
-    set cst                                                                      
-    set nocsverb                                                                 
-    " add any database in current directory                                      
-    if filereadable("cscope.out")                                                
-        cs add cscope.out                                                        
-    endif                                                                        
-    set csverb                                                                   
-endif                                                                            
+cscope settings
+if has("cscope")
+    set csto=1
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
+endif
 
-"s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方                          
-"g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能                        
-"d: 查找本函数调用的函数                                                         
-"c: 查找调用本函数的函数                                                         
-"t: 查找指定的字符串                                                             
-"e: 查找egrep模式，相当于egrep功能，但查找速度快多了                             
-"f: 查找并打开文件，类似vim的find功能                                            
-"i: 查找包含本文件的文件                                                         
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>                           
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>                           
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>                           
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>                           
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>                           
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>                           
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>                         
+"s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+"g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+"d: 查找本函数调用的函数
+"c: 查找调用本函数的函数
+"t: 查找指定的字符串
+"e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+"f: 查找并打开文件，类似vim的find功能
+"i: 查找包含本文件的文件
+nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
+nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
@@ -390,21 +338,6 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Quickly open a buffer for scripbble
-map <leader>q :e ~/buffer<cr>
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -437,7 +370,6 @@ function! VisualSelection(direction) range
     let @" = l:saved_reg
 endfunction
 
-
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -466,14 +398,6 @@ function! <SID>BufcloseCloseIt()
         execute("bdelete! ".l:currentBufNum)
     endif
 endfunction
-
-" tags
-" set tags=tags;
-" set autochdir
-" let Tlist_Show_One_File=1
-" let Tlist_Exit_OnlyWindow=1
-
-nnoremap <silent> <F3> :Grep<CR>
 
 """"""""""""""""""""""""""""""
 " netrw setting
@@ -504,28 +428,32 @@ let g:bufExplorerSplitRight=0        " Split left.
 let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = 30  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-autocmd BufWinEnter \[Buf\ List\] setl nonumber
+au BufWinEnter \[Buf\ List\] setl nonumber
 
 """"""""""""""""""""""""""""""
-" Coding general restriction
+" Code length restriction
 """"""""""""""""""""""""""""""
-set colorcolumn=81
+au FileType cpp set colorcolumn=80
+au FileType python set colorcolumn=80
 
 """"""""""""""""""""""""""""""
-" jquery syntax highlight
+" Syntax
 """"""""""""""""""""""""""""""
+let python_highlight_all=1
+syntax on
 au BufRead,BufNewFile *.js set syntax=jquery
 
 """"""""""""""""""""""""""""""
-" php 
+" Php
 """"""""""""""""""""""""""""""
+" php function list autocomplete
 au FileType php call AddPHPFuncList()
 function! AddPHPFuncList()
     "php function
     if MySys() == "win"
-        set dictionary-=$vim/vimfiles/php_funclist.txt dictionary+=$vim/vimfiles/php_funclist.txt
+        set dictionary-=$vim/vimfiles/doc/php_funclist.txt dictionary+=$vim/vimfiles/doc/php_funclist.txt
     else
-        set dictionary-=~/.vim/php_funclist.txt dictionary+=~/.vim/php_funclist.txt
+        set dictionary-=~/.vim/doc/php_funclist.txt dictionary+=~/.vim/doc/php_funclist.txt
     endif
     set complete-=k complete+=k
 
@@ -544,4 +472,18 @@ nmap <leader>9 :set fileencoding=cp936<cr>:w<cr>:set fenc<cr>
 nmap <leader>w :w!<cr>
 nmap <leader>e :e
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
+" Quickly open a buffer for scripbble
+map <leader>q :e ~/buffer<cr>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+" tags
+" set tags=tags;
+" set autochdir

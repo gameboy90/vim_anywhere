@@ -24,6 +24,8 @@ function! GetGooglePythonIndent(lnum)
     call cursor(par_line, 1)
     if par_col != col("$") - 1
       return par_col
+    else
+      return indent(par_line) + &sw " FIXED HERE. FIXED BY ADDING THIS LINE
     endif
   endif
 
