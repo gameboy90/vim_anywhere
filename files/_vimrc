@@ -75,7 +75,6 @@ set tm=500
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 function! MySys()
     if has("win32")
         return "win"
@@ -125,15 +124,10 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For python under pep8 standard
-au BufNewFile,BufRead *.py set tabstop=8 softtabstop=4 shiftwidth=4 expandtab
-
-" For javascript html css
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-
+" Global settings for all files (but may be overridden in ftplugin).
+set tabstop=2
+set shiftwidth=2
+set noexpandtab
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -246,10 +240,6 @@ au BufWrite *.coffee :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => config for foldmethod
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" add flodmethod as marker to zf aotoclouser /*{{{*/
-" set foldmethod=marker
-au FileType php set foldmethod=syntax
-au FileType python set foldmethod=indent
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
@@ -400,14 +390,13 @@ au BufWinEnter \[Buf\ List\] setl nonumber
 """"""""""""""""""""""""""""""
 " Code length restriction
 """"""""""""""""""""""""""""""
-au FileType cpp set colorcolumn=80
-au FileType python set colorcolumn=80
+set colorcolumn=80
 
 """"""""""""""""""""""""""""""
 " Syntax
 """"""""""""""""""""""""""""""
-let python_highlight_all=1
 syntax on
+let python_highlight_all=1
 au BufRead,BufNewFile *.js set syntax=jquery
 
 """"""""""""""""""""""""""""""
