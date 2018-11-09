@@ -5,15 +5,20 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " Activate $FILETYPE_plugin $FILETYPE_indent $FILETYPE_detect
 filetype plugin indent on
+
+" Set one line character length
+set textwidth=80
 
 " Sets how many lines of history VIM has to remember
 set history=700
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+" Set line number
+set nu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -337,6 +342,7 @@ endfunction
 """"""""""""""""""""""""""""""
 " netrw setting
 """"""""""""""""""""""""""""""
+let NERDTreeShowHidden=1
 let g:netrw_winsize = 30
 nmap <silent> <leader>fe :Sexplore<cr> 
 " add NERDTREE plugin for dir view on left window,making a shortcut here Ctrl+n=:NERDTreeToggle
